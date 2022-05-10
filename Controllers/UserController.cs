@@ -15,7 +15,7 @@ namespace operation_OLX.Controllers
         public async Task<IActionResult> Index(string Name,string Location,string Category)
         {
             var postModel = new PostListModel();
-           // ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
+            ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
             ViewBag.cats = _DataServices.GetCatsAsync().Result;
             postModel.Posts=  _DataServices.GetFilteredPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != AccountController.CurrentUserName && P.Status == "Active").ToList();
             return View(postModel);
