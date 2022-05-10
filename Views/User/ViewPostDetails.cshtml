@@ -1,0 +1,108 @@
+﻿@model operation_OLX.Models.Post
+@{
+    ViewData["Title"] = "ViewPostDetails";
+}
+
+<h1>ViewPostDetails</h1>
+<div>
+
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+ Style the header */
+/*header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 30%;
+  height: 300px; /* only for demonstration, should be removed */
+  background: #ccc;
+  padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 70%;
+  background-color: #f1f1f1;
+  height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+/*footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}*/
+
+
+</style>
+</head>
+<body>
+
+<h2>@Model.Title</h2>
+<p>@Model.Category</p>
+<p></p>
+
+<header>
+  <h2>@Model.Price</h2>
+</header>
+
+<section>
+  
+  
+  <article>
+      <div>
+           <img src="~/images/@Model.ImagePath1"   
+                            height="300" width="700"
+                         asp-append-version="true" />
+      </div>
+   
+    <p>@Model.Description</p>
+    <p>@Model.State</p>
+     <p>@Model.City</p>
+      <p>@Model.LandMark</p>
+  </article>
+   <form>
+   <input class="btn btn-dark" type="button" value="Go back!" onclick="history.back()">
+</form>
+</section>
+
+<footer>
+
+</footer>
+
+</body>
+</div>
+

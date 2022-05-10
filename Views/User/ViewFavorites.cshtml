@@ -1,0 +1,77 @@
+﻿@model List<operation_OLX.Models.Post>
+@{
+    ViewData["Title"] = "ViewFavorites";
+}
+
+<h1>ViewFavorites</h1>
+
+@if(@Model!=null|@Model.Count()!=0)
+{
+@foreach(var Product in Model)
+{
+<div>
+   
+    <head>
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  display:flex;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="card">
+    <img src="~/images/@Product.ImagePath1"
+                         class="img-fluid"   
+                            
+                         asp-append-version="true" />
+  <h1>@Product.Title</h1>
+  <p class="price">@Product.Price</p>
+  <p>@Product.Description</p>
+  <p>@Product.State</p>
+  <p>@Product.Status</p>
+ 
+   <p><button> @Html.ActionLink("RemoveFavorite", "RemoveFavorite", new { id=Product.Id})</button></p>
+  <p><button> @Html.ActionLink("ViewPostDetails", "ViewPostDetails", new { id=Product.Id})</button></p>
+</div>
+</body>
+    
+    </div>
+}
+}
+   @if(@Model==null|@Model.Count()==0)
+{
+    <h3>You have not favorited any products</h3>
+}
+    <h3>Click here To Buy More</h3>
+
+    <button class="btn btn-dark"> @Html.ActionLink("ViewPosts", "Index")</button>
+

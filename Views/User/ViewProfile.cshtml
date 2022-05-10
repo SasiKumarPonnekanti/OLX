@@ -1,0 +1,205 @@
+﻿@model operation_OLX.Models.PersonalInfo
+
+@{
+    ViewData["Title"] = "ViewProfile";
+}
+
+@*<h1>ViewProfile</h1>
+
+<h4>PersonalInfo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ViewProfile">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AboutMe" class="control-label"></label>
+                <input asp-for="AboutMe" class="form-control" />
+                <span asp-validation-for="AboutMe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LandMark" class="control-label"></label>
+                <input asp-for="LandMark" class="form-control" />
+                <span asp-validation-for="LandMark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Details" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Go To Home</a>
+</div>*@
+
+
+ <form asp-action="ViewProfile">
+<div class="student-profile py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent text-center">
+            <img class="profile_img" src="https://th.bing.com/th/id/OIP.IZw28NoFO-aBC_iQaD3mCgAAAA?pid=ImgDet&rs=1" alt="student dp">
+            <h3>
+                 <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            </h3>
+          </div>
+          <div class="card-body">
+            <p class="mb-0"><strong class="pr-1">:</strong>
+                 <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+          </div>
+          <div class="card-body pt-0">
+            <table class="table table-bordered">
+              <tr>
+                <th width="30%">Phone</th>
+                <td width="2%">:</td>
+                <td>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+                </td>
+              </tr>
+              <tr>
+                <th width="30%">Location</th>
+                <td width="2%">:</td>
+                <td>
+                    <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+                </td>
+              </tr>
+              <tr>
+                <th width="30%">.......</th>
+                <td width="2%">:</td>
+                <td>
+                     <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+                </td>
+              </tr>
+              <tr>
+                <th width="30%">........</th>
+                <td width="2%">:</td>
+                <td>
+                    <div class="form-group">
+                <label asp-for="LandMark" class="control-label"></label>
+                <input asp-for="LandMark" class="form-control" />
+                <span asp-validation-for="LandMark" class="text-danger"></span>
+            </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+          <div style="height: 26px"></div>
+        <div class="card shadow-sm">
+          <div class="card-header bg-transparent border-0">
+            <h3 class="mb-0"><i class="far fa-clone pr-1"></i>About Me</h3>
+          </div>
+          <div class="form-group card-body pt-0">
+                <label asp-for="AboutMe" class="control-label"></label>
+                <input asp-for="AboutMe" class="form-control" />
+                <span asp-validation-for="AboutMe" class="text-danger"></span>
+                <input type="submit" value="Update Details" class="btn btn-primary" />
+                <div>
+                <a asp-action="ViewMyPosts" class="btn btn-success">View My Posts</a>
+               </div>
+                </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ </form>
+
+
+<style>
+body {
+    background: #67B26F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #4ca2cd, #67B26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: #000;
+}.student-profile .card {
+    border-radius: 10px;
+}
+.student-profile .card .card-header .profile_img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 10px auto;
+    border: 10px solid #ccc;
+    border-radius: 50%;
+}.student-profile .card h3 {
+    font-size: 20px;
+    font-weight: 700;
+}.student-profile .card p {
+    font-size: 16px;
+    color: #000;
+}.student-profile .table th,
+.student-profile .table td {
+    font-size: 14px;
+    padding: 5px 10px;
+    color: #000;
+}
+</style>
+

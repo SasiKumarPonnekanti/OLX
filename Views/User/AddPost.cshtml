@@ -1,0 +1,93 @@
+﻿@model operation_OLX.Models.PostModel
+@{
+    ViewData["Title"] = "AddPost";
+}
+
+<h1>AddPost</h1>
+<section class="text-center">
+  <!-- Background image -->
+  <div class="p-5 bg-image" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+        height: 300px;
+        "></div>
+  <!-- Background image -->
+
+  <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        margin-top: -100px;
+        background: hsla(0, 0%, 100%, 0.8);
+        backdrop-filter: blur(30px);
+        ">
+    <div class="card-body py-5 px-md-5">
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5">Sell Your Products</h2>
+          <form enctype="multipart/form-data" asp-action="AddPost">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="form-outline mb-4">
+               <label asp-for="Post.Category" class="control-label"></label>
+                @*<input asp-for="Post.Category" class="form-control" />*@
+                <select asp-for="Post.Category" class ="form-control" asp-items=ViewBag.Categories></select>
+                <span asp-validation-for="Post.Category" class="text-danger"></span>
+            </div>
+             <div class="form-outline mb-4">
+               <label asp-for="Post.Title" class="control-label"></label>
+                <input asp-for="Post.Title" class="form-control" />
+                <span asp-validation-for="Post.Title" class="text-danger"></span>
+            </div>
+             <div class="form-outline mb-4">
+               <label asp-for="Post.Description" class="control-label"></label>
+                <input asp-for="Post.Description" class="form-control" />
+                <span asp-validation-for="Post.Description" class="text-danger"></span>
+            </div>
+             <div class="form-outline mb-4">
+               <label asp-for="Post.Price" class="control-label"></label>
+                <input asp-for="Post.Price" class="form-control" />
+                <span asp-validation-for="Post.Price" class="text-danger"></span>
+            </div>
+             <div class="form-outline mb-4">
+               <label asp-for="Post.State" class="control-label"></label>
+                <input asp-for="Post.State" class="form-control" />
+                <span asp-validation-for="Post.State" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+               <label asp-for="Post.City" class="control-label"></label>
+                <input asp-for="Post.City" class="form-control" />
+                <span asp-validation-for="Post.City" class="text-danger"></span>
+            </div>
+            <div class="form-outline mb-4">
+               <label asp-for="Post.LandMark" class="control-label"></label>
+                <input asp-for="Post.LandMark" class="form-control" />
+                <span asp-validation-for="Post.LandMark" class="text-danger"></span>
+            </div>
+            <h3>Add Images</h3>
+            <h4>Atleast one image is required</h4>
+           <div>
+             <div class="form-outline mb-4">
+              <label asp-for="image1"></label>
+              <input asp-for="image1" type="file">
+              <span asp-validation-for="image1"></span>
+            </div>
+             <div class="form-outline mb-4">
+              <label asp-for="image2"></label>
+              <input asp-for="image2" type="file">
+              
+            </div>
+             <div class="form-outline mb-4">
+              <label asp-for="image3"></label>
+              <input asp-for="image3" type="file">
+             
+            </div>
+            </div>
+           
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">
+              upload
+            </button>           
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section: Design Block -->

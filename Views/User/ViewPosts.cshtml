@@ -1,0 +1,154 @@
+﻿@model List<operation_OLX.Models.Post>
+@{
+    ViewData["Title"] = "ViewPosts";
+}
+
+<!DOCTYPE html>
+<html>
+    @*onload="myFunction()"*@
+<body >
+
+<h1>Hello World!</h1>
+@foreach(var Product in Model)
+{ 
+<div class="card" onload="myFunction()">
+   <img src="~/images/@Product.ImagePath1"
+                         class="rounded-circle"   
+                         height="140" width="140"   
+                         asp-append-version="true" />
+  <h1>@Product.Title</h1>
+  <p class="price">@Product.Price</p>
+  <p>@Product.Description</p>
+  
+  <button type="button" onclick="Add(@Product.Id)" >Add to Favourites</button>
+  <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+  <span id='status'></span>
+  <p><button> @Html.ActionLink("ViewPostDetails", "ViewPostDetails", new { id=Product.Id})</button></p>
+</div>
+}
+
+<script>
+    let x = myFunction(); 
+document.getElementById("status").innerHTML = "This Is"+x;
+function myFunction(a, b) {
+  return a * b;   
+} 
+//function myFunction() {
+  
+        //$.ajax(
+        //    {
+        //        type:"GET",
+        //        url:"/User/Isfavourited",
+        //        data :{"Id":3},
+        //        success:function(data){
+        //            console.log(data);
+        //           return  data;
+        //        },
+        //        error: function(err){
+        //            console.error(err);
+        //        }
+        //    }
+        //)
+//}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h1>ViewPosts</h1>
+<body onload = "myFunction()">
+@foreach(var Product in Model)
+{ 
+<div class="card">
+   <img src="@Url.Content(@Product.ImagePath1)"
+                         class="rounded-circle"   
+                         height="140" width="140"   
+                         asp-append-version="true" />
+  <h1>@Product.Title</h1>
+  <p class="price">@Product.Price</p>
+  <p>@Product.Description</p>
+  <button type="button" onclick="Add(@Product.Id)" >Add to Favourites</button>
+  <p><button> @Html.ActionLink("ViewPostDetails", "ViewPostDetails", new { id=Product.Id})</button></p>
+</div>
+}
+</body>
+
+
+<script>
+    function Add(detail)
+    {
+        var id = $("#id")
+        $.ajax(
+            {
+                type:"POST",
+                url:"/User/AddFavorite",
+                data :{"Id":detail}
+            }
+        )
+    }
+    function myFunction() {
+      alert("Page is loaded");
+}
+</script>*@
+
+
+
+
+
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+    
+    
+
