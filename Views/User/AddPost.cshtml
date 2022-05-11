@@ -65,17 +65,19 @@
            <div>
              <div class="form-outline mb-4">
               <label asp-for="image1"></label>
-              <input asp-for="image1" type="file">
+              <input asp-for="image1" type="file" onloadeddata="mufunc(image1)">
               <span asp-validation-for="image1"></span>
             </div>
              <div class="form-outline mb-4">
               <label asp-for="image2"></label>
               <input asp-for="image2" type="file">
+              @*<span asp-validation-for="image2" ></span>*@
               
             </div>
              <div class="form-outline mb-4">
               <label asp-for="image3"></label>
               <input asp-for="image3" type="file">
+              @*<span asp-validation-for="image3"></span>*@
              
             </div>
             </div>
@@ -90,4 +92,14 @@
     </div>
   </div>
 </section>
+<script>
+    function myfunc(detail){
+        alert('image Uploaded'),
+        confirm.log('oook')
+
+    }
+</script>
+<script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script> 
+<script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script> 
+<script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
 <!-- Section: Design Block -->

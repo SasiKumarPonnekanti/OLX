@@ -1,12 +1,13 @@
-﻿@model List<operation_OLX.Models.Post>
+﻿
+
+@model List<operation_OLX.Models.Post>
 @{
     ViewData["Title"] = "ViewPosts";
 }
 
 <!DOCTYPE html>
 <html>
-    @*onload="myFunction()"*@
-<body >
+<body>
 
 <h1>Hello World!</h1>
 @foreach(var Product in Model)
@@ -16,42 +17,42 @@
                          class="rounded-circle"   
                          height="140" width="140"   
                          asp-append-version="true" />
+   <input id="@Product.Id" type="checkbox" value=@Product.Id  onchange="myFun(@Product.Id)"/>
   <h1>@Product.Title</h1>
   <p class="price">@Product.Price</p>
   <p>@Product.Description</p>
-  
-  <button type="button" onclick="Add(@Product.Id)" >Add to Favourites</button>
-  <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
-  <span id='status'></span>
   <p><button> @Html.ActionLink("ViewPostDetails", "ViewPostDetails", new { id=Product.Id})</button></p>
 </div>
 }
 
 <script>
-    let x = myFunction(); 
-document.getElementById("status").innerHTML = "This Is"+x;
-function myFunction(a, b) {
-  return a * b;   
-} 
-//function myFunction() {
-  
-        //$.ajax(
-        //    {
-        //        type:"GET",
-        //        url:"/User/Isfavourited",
-        //        data :{"Id":3},
-        //        success:function(data){
-        //            console.log(data);
-        //           return  data;
-        //        },
-        //        error: function(err){
-        //            console.error(err);
-        //        }
-        //    }
-        //)
-//}
-</script>
-
+    function myFun(detail)
+    {
+       if(document.getElementById(detail).checked==true){
+           console.log(detail)
+           alert('item added to favorites');
+            $.ajax(
+               {
+                   type:"POST",
+                   url:"/User/AddFavorite",
+                   data:{"Id":detail},
+               }
+           )
+       }
+       else
+       {
+          console.log(detail)
+         alert('item removed from favorites');
+         $.ajax(
+               {
+                   type:"POST",
+                   url:"/User/RemoveFavorite",
+                   data:{"Id":detail}    
+               }
+           )
+       }
+    } 
+</Script>
 </body>
 </html>
 

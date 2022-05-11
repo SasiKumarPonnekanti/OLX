@@ -7,7 +7,8 @@ namespace operation_OLX.Models
     {
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress]
-        //[Remote("IsUserNameUnique", "Account", ErrorMessage = "UserName already in use.")]
+        [Remote("IsValidUserName", "Account", ErrorMessage = "UserName already in use.",HttpMethod ="POST")]
+       // [ValidUserName]
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is Required")]
         [RegularExpression("^((?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])|(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^a-zA-Z0-9])|(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])|(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9])).{8,}$",

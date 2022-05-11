@@ -92,6 +92,7 @@ namespace operation_OLX.Services
             if (Product.image3 != null)
             {
                 var image3FileName = ContentDispositionHeaderValue.Parse(Product.image2.ContentDisposition).FileName.Trim('"');
+               
                 var FinalPath3 = Path.Combine(hostEnvironment.WebRootPath, "images", image3FileName);
                 using (var fs = new FileStream(FinalPath3, FileMode.Create))
                 {

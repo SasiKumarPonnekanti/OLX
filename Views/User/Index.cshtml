@@ -19,6 +19,13 @@
               </div>
               <div class="form-group  col-md-6" style="float:left;">
                 
+                  <label asp-for="Category" class="control-label"></label>
+         
+                <select asp-for="Category" class ="form-control" asp-items=ViewBag.Categories></select>
+                
+              </div>
+              <div class="form-group  col-md-6" style="float:left;">
+                
                    <input type="submit" value="Search"  class="btn btn-primary" />
               
               </div>
@@ -31,8 +38,8 @@
   @foreach( var K in ViewBag.cats)
         {
              
-             <li class="text-dark float-right" onclick="Call(@K.CatName)">@K.CatName </li>
-                 
+             
+                 <input type="checkbox" @K.CatName  style="float:right"/>
         }      
  </diV>
        
@@ -40,7 +47,7 @@
 
 
 
-<div class="table" >
+@*<div class="table" >*@
 @foreach(var Product in Model.Posts)
 {
 <div>
@@ -76,8 +83,7 @@
   opacity: 0.7;
 }
 .card {
-    display:flex
-    flex: 1
+    display:-webkit-inline-box
     justify-content: centre
     column-count:3
    
@@ -89,14 +95,15 @@
 .container-fluid {
     	background-color: #F5FFFA;
     }
+    input.larger{
+        width: 50px;
+        height: 50px;
+    }
    
 }
 </style>
 </head>
 <body>
-
-
-
 <div class="card">
    <img src="~/images/@Product.ImagePath1"
                          class="img-fluid"   
@@ -105,7 +112,7 @@
   <h1>@Product.Title</h1>
   <p class="price">@Product.Price</p>
   <p>@Product.Description</p>
-  <button type="button" onclick="Add(@Product.Id)" >Add To favourite</button>
+  <input id="@Product.Id" class = "larger" type="checkbox" value=@Product.Id  onchange="myFun(@Product.Id)"/>
   <p><button> @Html.ActionLink("ViewPostDetails", "ViewPostDetails", new { id=Product.Id})</button></p>
 </div>
 <script>
@@ -120,8 +127,36 @@
             }
         )
     }
-    function Call(detail)
+    function myFun(detail)
     {
+       if(document.getElementById(detail).checked==true){
+         
+           console.log(detail)
+           alert('item added to favorites');
+            $.ajax(
+               {
+                   type:"POST",
+                   url:"/User/AddFavorite",
+                   data:{"Id":detail},
+               }
+           )
+       }
+       else
+       {
+          console.log(detail)
+         alert('item removed from favorites');
+         $.ajax(
+               {
+                   type:"POST",
+                   url:"/User/RemoveFavorite",
+                   data:{"Id":detail}    
+               }
+           )
+       }
+    }
+    function myfun2()
+    {
+        
         $.ajax({
             type:"POST",
                 url:"/User/AddFavorite",
@@ -129,15 +164,12 @@
         })
     }
 </script>
-
 </body>
-    
+
 </div>
 }
 
-
-
-</div>
+@*</div>*@
 @if(Model.Posts.Count==0)
 {
        <h2>OOPS! No Products Found</h2>             

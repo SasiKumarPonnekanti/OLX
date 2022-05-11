@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qex1LAPYMCcjwe8w/X+w7wV/g6/d/VsxCk+zwK5etfs=",
+  "Hash": "ho8y9IM/3Tn+SngTTZe21aKwOp8/pqHi3LsgesqlOyo=",
   "Source": "operation_OLX",
   "BasePath": "_content/operation_OLX",
   "Mode": "Default",
@@ -151,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\cooker.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\dog.png",
+      "SourceId": "operation_OLX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\",
+      "BasePath": "_content/operation_OLX",
+      "RelativePath": "images/dog.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\dog.png"
     },
     {
       "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\image.png",

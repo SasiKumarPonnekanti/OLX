@@ -12,6 +12,9 @@ namespace operation_OLX.Controllers
         {
             this._DataServices=_DataServices;
         }
+
+
+
         public async Task<IActionResult> Index(string Name,string Location,string Category)
         {
             var postModel = new PostListModel();
@@ -20,16 +23,24 @@ namespace operation_OLX.Controllers
             postModel.Posts=  _DataServices.GetFilteredPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != AccountController.CurrentUserName && P.Status == "Active").ToList();
             return View(postModel);
         }
+
+
         
         public IActionResult FilterPosts(string Name, string Location, string Category)
         {
             return RedirectToAction("Index",new {Name=Name,Location=Location,Category=Category});
         }
+
+
+
         public async Task<IActionResult> ViewProfile()
         {
             var Profile = _DataServices.GetDetailsAsync().Result;
             return View(Profile);
         }
+
+
+
         [HttpPost]
         public async Task<IActionResult> ViewProfile(PersonalInfo Profile)
         {
@@ -51,12 +62,12 @@ namespace operation_OLX.Controllers
         public async Task<IActionResult> AddPost(PostModel Product)
         {
             ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
+            ModelState.Remove("Post.Status"); ModelState.Remove("Post.UserId"); ModelState.Remove("image2"); ModelState.Remove("image3");
             if (ModelState.IsValid)
             {
                 await _DataServices.AddPostAsync(Product);
                 return RedirectToAction("ViewMyPosts");
-            }
-            else
+            }else
             {
                 return View(Product);
             }
@@ -110,7 +121,7 @@ namespace operation_OLX.Controllers
             return View(Posts);
         }
          
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Isfavourited(int id)
         {
             return Json(await _DataServices.IsfavoritedAsync(id));

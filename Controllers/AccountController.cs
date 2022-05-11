@@ -73,5 +73,11 @@ namespace operation_OLX.Controllers
                 return View(newUser);
             }
         }
+       
+        [AllowAnonymous]
+        public JsonResult IsValidUserName(string Email)
+        {
+            return Json(_SecurityService.ValidateUserName(Email).Result);
+        }
     }
 }

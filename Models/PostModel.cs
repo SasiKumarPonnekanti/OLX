@@ -3,7 +3,8 @@
     public class PostModel
     {
         public Post Post { get; set; }
-        [Required(ErrorMessage ="Atlesast One Image Is Required")]
+        //[Required(ErrorMessage ="Atlesast One Image Is Required")]
+    //    [ValidateFile]
         public IFormFile image1 { get; set; }
         
         public IFormFile image2 { get; set; }
