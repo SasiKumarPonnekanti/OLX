@@ -7,7 +7,7 @@
 
 <!DOCTYPE html>
 <html>
-<body>
+<body >
 
 <h1>Hello World!</h1>
 @foreach(var Product in Model)
@@ -17,7 +17,7 @@
                          class="rounded-circle"   
                          height="140" width="140"   
                          asp-append-version="true" />
-   <input id="@Product.Id" type="checkbox" value=@Product.Id  onchange="myFun(@Product.Id)"/>
+   <input id="@Product.Id" type="checkbox" value=@Product.Id onload="myfunc2(@Product.Id)" onchange="myFun(@Product.Id)"/>
   <h1>@Product.Title</h1>
   <p class="price">@Product.Price</p>
   <p>@Product.Description</p>
@@ -25,7 +25,7 @@
 </div>
 }
 
-<script>
+<script >
     function myFun(detail)
     {
        if(document.getElementById(detail).checked==true){
@@ -51,10 +51,29 @@
                }
            )
        }
-    } 
+    }
+    
+
+       
+  
+
+  function demo(detail1,detail2){
+      console.log(detail1);
+      
+      document.getElementById(detail1).checked = true;
+     
+  }
 </Script>
+
+}
 </body>
 </html>
+@foreach(var pro in @ViewBag.vars)
+{
+    <script>
+        demo(pro.Key,pro.Value);
+    </script>
+}
 
 
 

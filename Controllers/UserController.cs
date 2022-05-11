@@ -49,7 +49,13 @@ namespace operation_OLX.Controllers
         }
         public async Task<IActionResult> ViewPosts()
         {
-            var Posts =   _DataServices.GetPostsAsync().Result.Where(P=>P.UserId!=AccountController.CurrentUserName&&P.Status=="Active").ToList();  
+            var Posts =   _DataServices.GetPostsAsync().Result.Where(P=>P.UserId!=AccountController.CurrentUserName&&P.Status=="Active").ToList();
+            IDictionary<int, bool> vars = new Dictionary<int, bool>();
+            foreach(var d in Posts)
+            {
+                vars.Add(d.Id, _DataServices.IsfavoritedAsync(d.Id).Result);
+            }
+            ViewBag.vars = vars;
             return View(Posts);
         }
 
@@ -122,9 +128,9 @@ namespace operation_OLX.Controllers
         }
          
         [HttpPost]
-        public async Task<IActionResult> Isfavourited(int id)
+        public async Task Isfavourited(int id)
         {
-            return Json(await _DataServices.IsfavoritedAsync(id));
+           Json((await _DataServices.IsfavoritedAsync(id)));
         }
 
         
