@@ -11,7 +11,10 @@ namespace operation_OLX.Controllers
         private readonly SecurityServices _SecurityService;
 
         public static string CurrentUserName { get; set; }
+
         public static bool IsLoggedIn { get; set; }
+
+
         public AccountController(SecurityServices _SecurityService)
         {
             this._SecurityService= _SecurityService;

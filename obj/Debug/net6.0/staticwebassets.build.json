@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7mJXL3xoO1AAryg46FW5l590SSO7GCRyggA2jZqcHC4=",
+  "Hash": "YiYT2l8W9wxlvBdLCfgPJb/haBCdGnGO0+xPJ9d639A=",
   "Source": "operation_OLX",
   "BasePath": "_content/operation_OLX",
   "Mode": "Default",
@@ -219,6 +219,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\OIP.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\phone redmi.png",
+      "SourceId": "operation_OLX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\",
+      "BasePath": "_content/operation_OLX",
+      "RelativePath": "images/phone redmi.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\phone redmi.png"
     },
     {
       "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\phone.jfif",
