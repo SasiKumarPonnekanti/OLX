@@ -7,7 +7,7 @@ namespace operation_OLX.Models
     {
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress]
-        [Remote("IsValidUserName", "Account", ErrorMessage = "UserName already in use.",HttpMethod ="POST")]
+        [Remote("IsValidUserName", "Account", ErrorMessage = "Email already in use.",HttpMethod ="POST")]
        // [ValidUserName]
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is Required")]

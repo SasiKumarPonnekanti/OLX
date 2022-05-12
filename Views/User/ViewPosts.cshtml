@@ -1,4 +1,6 @@
-﻿
+﻿@model List<operation_OLX.Models.Post>
+
+@*
 
 @model List<operation_OLX.Models.Post>
 @{
@@ -57,7 +59,7 @@
        
   
 
-  function demo(detail1,detail2){
+  function demo(detail1){
       console.log(detail1);
       
       document.getElementById(detail1).checked = true;
@@ -68,10 +70,10 @@
 }
 </body>
 </html>
-@foreach(var pro in @ViewBag.vars)
+@foreach(var pro in @ViewBag.favs)
 {
     <script>
-        demo(pro.Key,pro.Value);
+        demo(pro.Id);
     </script>
 }
 
@@ -139,7 +141,7 @@
 
 
 
-<style>
+@*<style>
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
@@ -169,6 +171,142 @@
   opacity: 0.7;
 }
 </style>
-    
+    *@
     
 
+<div style="display:-ms-inline-grid">
+    <div class="container-fluid flex ">
+  <div class="row mt-5">
+    @foreach(var Product in Model)
+    {
+        <div class="col-sm-4">
+    <div class="card">
+    <img src="~/images/@Product.ImagePath1" class="card-img-top" width="100%">
+    <div class="card-body pt-0 px-0">
+      <div class="d-flex flex-row justify-content-between mb-0 px-3">
+        <small class="text-muted mt-1">Price</small>
+        <h6>@Product.Price</h6>
+      </div>
+      <hr class="mt-2 mx-3">
+      <div class="d-flex flex-row justify-content-between px-3 pb-4">
+        <div class="d-flex flex-column"><span class="text-muted">@Product.Category</span></div>
+        <div class="d-flex flex-column"><h5 class="mb-0">@Product.Title</h5><small class="text-muted text-right"></small></div>
+      </div>
+      <div class="d-flex flex-row justify-content-between p-3 mid">
+        <div class="d-flex flex-column"><small class="text-muted mb-1">Add To favorites</small></div>
+        <div class="d-flex flex-column"><input id="@Product.Id" class = "fa-heart" type="checkbox" value=@Product.Id  onchange="myFun(@Product.Id)"/></div>
+      </div>
+      <small class="text-muted key pl-3">MoreDetails</small>
+      <div class="mx-3 mt-3 mb-2"> <p><button> @Html.ActionLink("ViewPostDetails", "ViewPostDetails", new { id=Product.Id})</button></p></div>
+      <small class="d-flex justify-content-center text-muted">*Legal Disclaimer</small>
+    </div>
+  </div>
+    </div>
+      
+    }
+  </div>
+ </div>
+</div>
+<script type="text/javascript">
+     function demo(detail1){
+      console.log(detail1);
+      document.getElementById(detail1).checked = true;
+     }
+</script>
+
+@foreach(var pro in @ViewBag.favs)
+{
+    <script>
+        demo(@pro.Id);
+    </script>
+}
+
+
+<style>
+   @@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+body{
+	background: #F5F1EE;
+	font-family: 'Roboto', sans-serif;
+}
+.card{
+	width: 250px;
+	border-radius: 10px;
+}
+
+.card-img-top{
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+span.text-muted{
+	font-size: 12px;
+}
+small.text-muted{
+	font-size: 8px;
+}
+h5.mb-0{
+	font-size: 1rem;
+}
+small.ghj{
+	font-size: 9px;
+}
+.mid{
+	background: #ECEDF1;
+}
+h6.ml-1{
+	font-size: 13px;
+}
+small.key{
+	text-decoration: underline;
+	font-size: 9px;
+	cursor: pointer;
+}
+.btn-danger{
+	color: #FFCBD2;
+}
+.btn-danger:focus{
+	box-shadow: none;
+}
+small.justify-content-center{
+	font-size: 9px;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+@@media screen and (max-width:600px){
+    .col-sm-4{
+        margin-bottom: 50px;
+    }
+}
+</style>
+
+
+<script>
+
+    function myFun(detail)
+    {
+       if(document.getElementById(detail).checked==true){
+           console.log(detail)
+           alert('item added to favorites');
+            $.ajax(
+               {
+                   type:"POST",
+                   url:"/User/AddFavorite",
+                   data:{"Id":detail},
+               }
+           )
+       }
+       else
+       {
+          console.log(detail)
+         alert('item removed from favorites');
+         $.ajax(
+               {
+                   type:"POST",
+                   url:"/User/RemoveFavorite",
+                   data:{"Id":detail}    
+               }
+           )
+       }
+    }
+  
+</script>

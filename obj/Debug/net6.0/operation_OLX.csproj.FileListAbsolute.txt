@@ -265,3 +265,4 @@ C:\Users\Coditas\Desktop\Operation_OLX\operation_OLX\bin\Debug\net6.0\zh-Hant\Mi
 C:\Users\Coditas\Desktop\Operation_OLX\operation_OLX\bin\Debug\net6.0\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Coditas\Desktop\Operation_OLX\operation_OLX\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Coditas\Desktop\Operation_OLX\operation_OLX\obj\Debug\net6.0\operation_OLX.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Coditas\Desktop\Operation_OLX\operation_OLX\obj\Debug\net6.0\operation_OLX.csproj.AssemblyReference.cache

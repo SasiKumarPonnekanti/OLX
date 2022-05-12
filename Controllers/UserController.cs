@@ -19,7 +19,8 @@ namespace operation_OLX.Controllers
         {
             var postModel = new PostListModel();
             ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
-            ViewBag.cats = _DataServices.GetCatsAsync().Result;
+            var FPosts = _DataServices.LoadfavouriteAsync().Result;
+            ViewBag.favs = FPosts;
             postModel.Posts=  _DataServices.GetFilteredPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != AccountController.CurrentUserName && P.Status == "Active").ToList();
             return View(postModel);
         }
@@ -50,12 +51,8 @@ namespace operation_OLX.Controllers
         public async Task<IActionResult> ViewPosts()
         {
             var Posts =   _DataServices.GetPostsAsync().Result.Where(P=>P.UserId!=AccountController.CurrentUserName&&P.Status=="Active").ToList();
-            IDictionary<int, bool> vars = new Dictionary<int, bool>();
-            foreach(var d in Posts)
-            {
-                vars.Add(d.Id, _DataServices.IsfavoritedAsync(d.Id).Result);
-            }
-            ViewBag.vars = vars;
+            var FPosts = _DataServices.LoadfavouriteAsync().Result;
+            ViewBag.favs= FPosts;
             return View(Posts);
         }
 

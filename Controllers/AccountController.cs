@@ -74,8 +74,8 @@ namespace operation_OLX.Controllers
             }
         }
        
-        [AllowAnonymous]
-        public JsonResult IsValidUserName(string Email)
+        
+        public IActionResult IsValidUserName(string Email)
         {
             return Json(_SecurityService.ValidateUserName(Email).Result);
         }

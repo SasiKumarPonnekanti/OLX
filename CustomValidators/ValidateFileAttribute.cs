@@ -18,16 +18,12 @@ namespace operation_OLX.CustomValidators
             {
                 return false;
             }
-
-            try
+            FileInfo fileInfo = new FileInfo(file.FileName);
+            if (fileInfo.Extension != ".jpg" && fileInfo.Extension != ".png")
             {
-                //using (var img = Image.FromStream(file.InputStream))
-                //{
-                //    return img.RawFormat.Equals(ImageFormat.);
-                //}
+                return false;
             }
-            catch { }
-            return false;
+            return true;
         }
     }
 }
