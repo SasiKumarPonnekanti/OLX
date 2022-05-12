@@ -21,7 +21,7 @@ namespace operation_OLX.Controllers
             ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
             var FavoritedPosts = _DataServices.LoadfavouriteAsync().Result;
             ViewBag.favs = FavoritedPosts;
-            postModel.Posts=  _DataServices.GetFilteredPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != AccountController.CurrentUserName && P.Status == "Active").ToList();
+            postModel.Posts=  _DataServices.GetPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != AccountController.CurrentUserName && P.Status == "Active").ToList();
             return View(postModel);
         }
 

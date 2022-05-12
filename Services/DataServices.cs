@@ -167,7 +167,7 @@ namespace operation_OLX.Services
             }
             return false;
         }
-        public async Task<List<Post>> GetFilteredPostsAsync(string Name,string Location,string Category)
+        public async Task<List<Post>> GetPostsAsync(string Name,string Location,string Category)
         {
             List<Post> posts = new List<Post>();
             posts = await ctx.Posts.ToListAsync();
