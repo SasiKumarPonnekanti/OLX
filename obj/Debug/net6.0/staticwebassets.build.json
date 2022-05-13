@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YiYT2l8W9wxlvBdLCfgPJb/haBCdGnGO0+xPJ9d639A=",
+  "Hash": "djmAX37PBUV16UB5OsRMsL7SH/1LExnqgUZjUdwBSKs=",
   "Source": "operation_OLX",
   "BasePath": "_content/operation_OLX",
   "Mode": "Default",
@@ -85,6 +85,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\bat.png",
+      "SourceId": "operation_OLX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\",
+      "BasePath": "_content/operation_OLX",
+      "RelativePath": "images/bat.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bat.png"
+    },
+    {
       "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\Book.jfif",
       "SourceId": "operation_OLX",
       "SourceType": "Discovered",
@@ -153,6 +170,23 @@
       "OriginalItemSpec": "wwwroot\\images\\cooker.jfif"
     },
     {
+      "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\Cooler.png",
+      "SourceId": "operation_OLX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\",
+      "BasePath": "_content/operation_OLX",
+      "RelativePath": "images/Cooler.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Cooler.png"
+    },
+    {
       "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\dog.png",
       "SourceId": "operation_OLX",
       "SourceType": "Discovered",
@@ -185,6 +219,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\image.png"
+    },
+    {
+      "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\laptop.png",
+      "SourceId": "operation_OLX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\",
+      "BasePath": "_content/operation_OLX",
+      "RelativePath": "images/laptop.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\laptop.png"
     },
     {
       "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\OIP.jfif",

@@ -1,0 +1,149 @@
+﻿@model IEnumerable<operation_OLX.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="FilterPosts">
+    <input type="text" name = "Status" id="Status" />
+    <button type="submit">Apply</button>
+
+</form>
+ 
+<table id="Post" class="table">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0)">
+               PostId
+            </th>
+            <th onclick="sortTable(1)">
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LandMark)
+            </th>
+            <th>
+                Image1
+            </th>
+            <th>
+                Image2
+            </th>
+            <th>
+                Image3
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dateposted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LandMark)
+            </td>
+            <td>
+                <img src="~/images/@item.ImagePath1" width="40" height="40">
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagePath2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagePath3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dateposted)
+            </td>
+            <td>
+                 @if(item.Status=="Pending")
+                {
+                     @Html.ActionLink("Approve", "ApprovePost", new { id=item.Id  }) 
+                }|
+                @if(item.Status=="Active"||item.Status=="Pending")
+                {
+                      @Html.ActionLink("Block", "BlockPost", new { id=item.Id }); 
+                }|
+                
+                @if(item.Status=="Blocked")
+                {
+                      @Html.ActionLink("UnBlock", "UnblockPost", new { id=item.Id }); 
+                }|
+               
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<style>
+table {
+  
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: justify-all;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+tr:nth-child(odd) {
+  background-color: #ffa089
+}
+</style>

@@ -9,12 +9,6 @@ namespace operation_OLX.Controllers
     public class AccountController : Controller
     {
         private readonly SecurityServices _SecurityService;
-
-        public static string CurrentUserName { get; set; }
-
-        public static bool IsLoggedIn { get; set; }
-
-
         public AccountController(SecurityServices _SecurityService)
         {
             this._SecurityService= _SecurityService;
@@ -22,32 +16,28 @@ namespace operation_OLX.Controllers
         
         public IActionResult Login()
         {
-            return View();
+            return View(new Account());
         }
        
        [HttpPost]
-        public async Task<IActionResult> Login(string UserName, string Password)
+        public async Task<IActionResult> Login(Account account)
         {
-            var Isvalid = _SecurityService.ValidateUserAsync(new Account() { UserName=UserName,Password=Password}).Result;
+            var Isvalid = _SecurityService.ValidateUserAsync(account).Result;
             if (Isvalid)
             {
-                CurrentUserName = UserName;
-                IsLoggedIn = true;
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", $"{SecurityServices.UserRole}");
             }
             else
             {
                 TempData["ErrorMessage"] = "Invalid username or password.";
                 return View();
             }
-
-
         }
       
         public async Task<IActionResult> Logout()
         {
-            CurrentUserName = String.Empty;
-            IsLoggedIn = false;
+            SecurityServices.UserName = String.Empty;
+            SecurityServices.IsLoogedIn = false;
 
             return RedirectToAction("Login", "Account");
         }

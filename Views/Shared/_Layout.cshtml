@@ -7,6 +7,24 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/operation_OLX.styles.css" asp-append-version="true" />
+    <style>
+        body {
+                background: linear-gradient(-45deg, #EE7752, #E73C7E, #ffffff, #23D5AB);
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
+            @@-webkit-keyframes gradient {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+    </style>
 </head>
 <body>
     <header>
@@ -23,26 +41,30 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">About Us</a>
                         </li>
                        
-                        @if (AccountController.IsLoggedIn)
+                        @if (SecurityServices.IsLoogedIn)
                           {
-                               <li class="nav-item float-right">
+                            @if (SecurityServices.UserRole == "User")
+                            {
+                                 <li class="nav-item float-right">
                               <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewProfile">ViewProfile</a>
                                    </li>
-                                   <li class="nav-item float-right">
-                              <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewFavorites">View Favorites</a>
-                                   </li>
-                                    <li class="nav-item float-right">
-                              <a class="nav-link text-dark btn-outline-success"  asp-area="" asp-controller="User" asp-action="AddPost">Sell</a>
-                                   </li>
-                                    <li class="nav-item float-right">
-                              <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Repost">Repost</a>
-                                   </li>
-                                   <li class="nav-item float-right">
+                                <li class="nav-item float-right">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewFavorites">View Favorites</a>
+                                </li>
+                                <li class="nav-item float-right">
+                                    <a class="nav-link text-dark btn-outline-success"  asp-area="" asp-controller="User" asp-action="AddPost">Sell</a>
+                                </li>
+                                <li class="nav-item float-right">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Repost">Repost</a>
+                                </li>
+                            }
+                            <li class="nav-item float-right">
                               <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                                    </li>
+                     
                                    @*<li class="btn btn-primary dropdown-toggle">
                                        <ul class="dropdown-menu">
                               <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>

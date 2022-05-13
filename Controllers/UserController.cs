@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace operation_OLX.Controllers
 {
-   [Autherized]
+   [User]
     public class UserController : Controller
     {
         private readonly DataServices _DataServices;
@@ -21,7 +21,7 @@ namespace operation_OLX.Controllers
             ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
             var FavoritedPosts = _DataServices.LoadfavouriteAsync().Result;
             ViewBag.favs = FavoritedPosts;
-            postModel.Posts=  _DataServices.GetPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != AccountController.CurrentUserName && P.Status == "Active").ToList();
+            postModel.Posts=  _DataServices.GetPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != SecurityServices.UserName && P.Status == "Active").ToList();
             return View(postModel);
         }
 
@@ -50,7 +50,7 @@ namespace operation_OLX.Controllers
         }
         public async Task<IActionResult> ViewPosts()
         {
-            var Posts =   _DataServices.GetPostsAsync().Result.Where(P=>P.UserId!=AccountController.CurrentUserName&&P.Status=="Active").ToList();
+            var Posts =   _DataServices.GetPostsAsync().Result.Where(P=>P.UserId!=SecurityServices.UserName&&P.Status=="Active").ToList();
             var FPosts = _DataServices.LoadfavouriteAsync().Result;
             ViewBag.favs= FPosts;
             return View(Posts);
@@ -85,24 +85,24 @@ namespace operation_OLX.Controllers
 
         public async Task<IActionResult> ViewMyPosts()
         {
-            var Posts = _DataServices.GetPostsAsync().Result.Where(P => P.UserId == AccountController.CurrentUserName&&P.Status=="Active").ToList();
+            var Posts = _DataServices.GetPostsAsync().Result.Where(P => P.UserId == SecurityServices.UserName).ToList();
             return View(Posts);
         }
         public async Task<IActionResult> Repost()
         {
-            var Posts = _DataServices.GetPostsAsync().Result.Where(P => P.UserId == AccountController.CurrentUserName && P.Status != "Active").ToList();
+            var Posts = _DataServices.GetPostsAsync().Result.Where(P => P.UserId == SecurityServices.UserName && P.Status != "Active").ToList();
             return View(Posts);
 
         }
         public async Task<IActionResult> Activate(int id)
         {
-            await _DataServices.ActivatePostAsync(id);
+            await _DataServices.UpdatePostStatusAsync(id,"Active");
             return RedirectToAction("Repost");
         }
 
         public async Task<IActionResult> Deactivate(int id)
         {
-            await _DataServices.DeactivatePostAsync(id);
+            await _DataServices.UpdatePostStatusAsync(id,"Deactivated");
             return RedirectToAction("ViewMyPosts");
         }
         

@@ -55,11 +55,16 @@
   <p class="price">@Product.Price</p>
   <p>@Product.Description</p>
   <p>@Product.State</p>
+  @if (@Product.Status == "Pending")
+   {
+       <h6>Your Post Goes Live After Approval</h6>
+   }
+
    @if (@Product.Status == "Active")
    {
        <p><button>@Html.ActionLink("Deacivate", "Deactivate", new { id=Product.Id})</button></p>
    }
-    else
+    @if(@Product.Status=="Deactivated")
     {
       <p><button>@Html.ActionLink("Repost", "Activate", new { id=Product.Id})</button></p>             
     }

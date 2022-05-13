@@ -6,6 +6,9 @@ namespace operation_OLX.Services
     public class SecurityServices
     {
         private readonly SellingPlatformContext ctx;
+        public static string UserName;
+        public static string UserRole;
+        public static bool IsLoogedIn;
         public SecurityServices(SellingPlatformContext ctx)
         {
             this.ctx = ctx;
@@ -15,8 +18,8 @@ namespace operation_OLX.Services
         {
             Account account = new Account();
             account.UserName = newUser.Email;
-            // account.Password = CalculateSHA256(newUser.Password) ;
             account.Password = EncryptAsync(newUser.Password).Result;
+            account.UserRole = "User";
           var entity=  await ctx.AddAsync(account);
             await ctx.SaveChangesAsync();
             if (entity != null)
@@ -28,11 +31,16 @@ namespace operation_OLX.Services
 
         public async Task<bool> ValidateUserAsync(Account account)
         {
+            if(account.UserRole==null)
+            { account.UserRole = "User"; }
            var res =   ctx.Accounts.Where(e=>e.UserName==account.UserName).FirstOrDefault();
             if (res != null)
             {
-                if (DecryptAsync(res.Password).Result == account.Password)
+                if (DecryptAsync(res.Password).Result == account.Password&&res.UserRole==account.UserRole)
                 {
+                    UserName = res.UserName;
+                    IsLoogedIn = true;
+                    UserRole = account.UserRole;
                     return true;
                 }
                 else

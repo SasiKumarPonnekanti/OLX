@@ -9,7 +9,7 @@ namespace operation_OLX.Services
     {
         IWebHostEnvironment hostEnvironment;
         private readonly SellingPlatformContext ctx;
-        string UserId= AccountController.CurrentUserName;
+        string UserId= SecurityServices.UserName;
         public DataServices(SellingPlatformContext ctx, IWebHostEnvironment hostEnvironment)
         {
             this.ctx = ctx;
@@ -18,11 +18,11 @@ namespace operation_OLX.Services
 
         public async Task<PersonalInfo> UpdateDetailsAsync(PersonalInfo Details)
         {
-            var Id = AccountController.CurrentUserName;
-            var MyInfo = await ctx.PersonalInfos.Where(p => p.UserId ==Id).FirstOrDefaultAsync();
+           
+            var MyInfo = await ctx.PersonalInfos.Where(p => p.UserId ==UserId).FirstOrDefaultAsync();
             if (MyInfo == null)
             {
-                Details.UserId = Id;
+                Details.UserId = UserId;
                 var res2 = await ctx.PersonalInfos.AddAsync(Details);
                 await ctx.SaveChangesAsync();
                 return res2.Entity;
@@ -44,12 +44,12 @@ namespace operation_OLX.Services
         public async Task<PersonalInfo> GetDetailsAsync()
         {
 
-            var Id = AccountController.CurrentUserName;
-            var MyDetails = await ctx.PersonalInfos.Where(p => p.UserId == Id).FirstOrDefaultAsync();
+           
+            var MyDetails = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
             if(MyDetails == null)
             {
                 PersonalInfo Person = new PersonalInfo();
-                Person.UserId = Id;
+                Person.UserId = UserId;
                 return Person;
             }
             else
@@ -67,7 +67,7 @@ namespace operation_OLX.Services
 
         public async Task<bool> AddPostAsync(PostModel Product)
         {
-            var Id = AccountController.CurrentUserName;
+            
             if (Product.image1 != null)
             {
                 var image1FileName = ContentDispositionHeaderValue.Parse(Product.image1.ContentDisposition).FileName.Trim('"');
@@ -100,35 +100,25 @@ namespace operation_OLX.Services
                 }
                 Product.Post.ImagePath3 = image3FileName;
             }
-            Product.Post.UserId=Id;
-            Product.Post.Status = "Active";
+            Product.Post.UserId=UserId;
+            Product.Post.Status = "Pending";
+            Product.Post.Dateposted = DateTime.Now;
             await ctx.Posts.AddAsync(Product.Post);
             await ctx.SaveChangesAsync();
             return true;
         }
-
-        public async Task DeactivatePostAsync(int id)
-        {
-            var Post = await ctx.Posts.FindAsync(id);
-            if (Post != null)
-            {
-                Post.Status = "Deactivated";
-                await ctx.SaveChangesAsync();
-            }
-        }
-
-        public async Task ActivatePostAsync(int id)
+        public async Task UpdatePostStatusAsync(int id,string Status)
         {
            var Post =  await ctx.Posts.FindAsync(id);
             if (Post != null)
             {
-                Post.Status = "Active";
+                Post.Status = Status;
                 await ctx.SaveChangesAsync();
             }
         }
         public async Task AddfavouriteAsync(int id)
         {
-            var UserId = AccountController.CurrentUserName;
+           
             var favourite = new Favourite() { UserId=UserId,PostId=id};
             if (!IsfavoritedAsync(id).Result)
             {
