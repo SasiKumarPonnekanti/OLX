@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 
 
 
+
 builder.Services.AddDbContext<SellingPlatformContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("AppConnStr"))
     );

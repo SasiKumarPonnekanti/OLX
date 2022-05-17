@@ -9,7 +9,7 @@ namespace operation_OLX.Services
     {
         IWebHostEnvironment hostEnvironment;
         private readonly SellingPlatformContext ctx;
-        string UserId= SecurityServices.UserName;
+        string UserId = SecurityServices.UserName;
         public DataServices(SellingPlatformContext ctx, IWebHostEnvironment hostEnvironment)
         {
             this.ctx = ctx;
@@ -18,8 +18,8 @@ namespace operation_OLX.Services
 
         public async Task<PersonalInfo> UpdateDetailsAsync(PersonalInfo Details)
         {
-           
-            var MyInfo = await ctx.PersonalInfos.Where(p => p.UserId ==UserId).FirstOrDefaultAsync();
+
+            var MyInfo = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
             if (MyInfo == null)
             {
                 Details.UserId = UserId;
@@ -34,7 +34,7 @@ namespace operation_OLX.Services
                 MyInfo.LandMark = Details.LandMark;
                 MyInfo.City = Details.City;
                 MyInfo.State = Details.State;
-                MyInfo.Name=Details.Name;
+                MyInfo.Name = Details.Name;
                 MyInfo.Phone = Details.Phone;
                 await ctx.SaveChangesAsync();
                 return MyInfo;
@@ -44,9 +44,9 @@ namespace operation_OLX.Services
         public async Task<PersonalInfo> GetDetailsAsync()
         {
 
-           
+
             var MyDetails = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
-            if(MyDetails == null)
+            if (MyDetails == null)
             {
                 PersonalInfo Person = new PersonalInfo();
                 Person.UserId = UserId;
@@ -67,7 +67,7 @@ namespace operation_OLX.Services
 
         public async Task<bool> AddPostAsync(PostModel Product)
         {
-            
+
             if (Product.image1 != null)
             {
                 var image1FileName = ContentDispositionHeaderValue.Parse(Product.image1.ContentDisposition).FileName.Trim('"');
@@ -92,7 +92,7 @@ namespace operation_OLX.Services
             if (Product.image3 != null)
             {
                 var image3FileName = ContentDispositionHeaderValue.Parse(Product.image2.ContentDisposition).FileName.Trim('"');
-               
+
                 var FinalPath3 = Path.Combine(hostEnvironment.WebRootPath, "images", image3FileName);
                 using (var fs = new FileStream(FinalPath3, FileMode.Create))
                 {
@@ -100,16 +100,16 @@ namespace operation_OLX.Services
                 }
                 Product.Post.ImagePath3 = image3FileName;
             }
-            Product.Post.UserId=UserId;
+            Product.Post.UserId = UserId;
             Product.Post.Status = "Pending";
             Product.Post.Dateposted = DateTime.Now;
             await ctx.Posts.AddAsync(Product.Post);
             await ctx.SaveChangesAsync();
             return true;
         }
-        public async Task UpdatePostStatusAsync(int id,string Status)
+        public async Task UpdatePostStatusAsync(int id, string Status)
         {
-           var Post =  await ctx.Posts.FindAsync(id);
+            var Post = await ctx.Posts.FindAsync(id);
             if (Post != null)
             {
                 Post.Status = Status;
@@ -118,8 +118,8 @@ namespace operation_OLX.Services
         }
         public async Task AddfavouriteAsync(int id)
         {
-           
-            var favourite = new Favourite() { UserId=UserId,PostId=id};
+
+            var favourite = new Favourite() { UserId = UserId, PostId = id };
             if (!IsfavoritedAsync(id).Result)
             {
                 await ctx.Favourites.AddAsync(favourite);
@@ -131,9 +131,9 @@ namespace operation_OLX.Services
         {
             var favourites = await ctx.Favourites.Where(f => f.UserId == UserId).ToListAsync();
             var Posts = new List<Post>();
-            foreach(var f in favourites)
+            foreach (var f in favourites)
             {
-               Posts.Add(await ctx.Posts.FindAsync(f.PostId));
+                Posts.Add(await ctx.Posts.FindAsync(f.PostId));
             }
             return Posts;
         }
@@ -144,32 +144,32 @@ namespace operation_OLX.Services
             if (favourite != null)
             {
                 ctx.Favourites.Remove(favourite);
-               await ctx.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
             }
         }
 
         public async Task<bool> IsfavoritedAsync(int Id)
         {
-            var favourite = await ctx.Favourites.Where(f => f.UserId == UserId && f.PostId==Id).FirstOrDefaultAsync();
-            if(favourite!= null)
+            var favourite = await ctx.Favourites.Where(f => f.UserId == UserId && f.PostId == Id).FirstOrDefaultAsync();
+            if (favourite != null)
             {
                 return true;
             }
             return false;
         }
-        public async Task<List<Post>> GetPostsAsync(string Name,string Location,string Category)
+        public async Task<List<Post>> GetPostsAsync(string Name, string Location, string Category)
         {
             List<Post> posts = new List<Post>();
             posts = await ctx.Posts.ToListAsync();
-            if(Name!=null)
+            if (Name != null)
             {
-               posts =  posts.Where(p=>p.Title.ToLower().Contains(Name.ToLower())).ToList();
+                posts = posts.Where(p => p.Title.ToLower().Contains(Name.ToLower())).ToList();
             }
-            if(Location!=null)
+            if (Location != null)
             {
-                posts = posts.Where(p => p.State.ToLower().Contains(Location.ToLower()) ||p.City.ToLower().Contains(Location.ToLower())).ToList();
+                posts = posts.Where(p => p.State.ToLower().Contains(Location.ToLower()) || p.City.ToLower().Contains(Location.ToLower())).ToList();
             }
-            if(Category!= null)
+            if (Category != null)
             {
                 posts = posts.Where(p => p.Category.ToLower().Contains(Category.ToLower())).ToList();
             }
@@ -178,7 +178,48 @@ namespace operation_OLX.Services
 
         public async Task<List<Category>> GetCatsAsync()
         {
-           return  await ctx.Categories.ToListAsync();
+            return await ctx.Categories.ToListAsync();
         }
+
+        public async Task<List<Chat>> LoadChats(string Id)
+        {
+            var Messages = await ctx.Chats.Where(c => (c.SenderId == UserId&&c.ReceiverId==Id) ||( c.ReceiverId == UserId&&c.SenderId==Id)).ToListAsync();
+            return Messages;
+        }
+
+        public async Task<List<string>> LoadChatHeadsAsync()
+        {
+            var Messages = await ctx.Chats.Where(c => c.SenderId == UserId || c.ReceiverId == UserId).ToListAsync();
+            var chatHeads = new List<string>();
+            foreach (var message in Messages)
+            {
+                if (message.SenderId == UserId)
+                {
+                    if (!chatHeads.Contains(message.ReceiverId))
+                    {
+                        chatHeads.Add(message.ReceiverId);
+                    }
+                }
+                else
+                {
+                    if (!chatHeads.Contains(message.SenderId))
+                    {
+                        chatHeads.Add(message.SenderId);
+                    }
+                }
+            }
+            return chatHeads;
+        }
+        public async Task SendMessageAsync(string Id,String Message)
+        {
+            var newMessage = new Chat();
+            newMessage.SenderId = UserId;
+            newMessage.ReceiverId = Id;
+            newMessage.Message = Message;
+            newMessage.DateTime = DateTime.Now.ToString();
+            await ctx.Chats.AddAsync(newMessage);
+            await ctx.SaveChangesAsync();
+        }
+       
     }
 }

@@ -7,7 +7,12 @@
 <h1>Index</h1>
 
 <form asp-action="FilterPosts">
-    <input type="text" name = "Status" id="Status" />
+    <select type="text" name = "Status" id="Status" >
+    <option value="Deactivated">Deactivated</option>
+    <option value="Pending">Pending</option>
+    <option value="Blocked">Blocked</option>
+    <option value="Active">Active</option>
+    </select>
     <button type="submit">Apply</button>
 
 </form>
@@ -15,7 +20,7 @@
 <table id="Post" class="table">
     <thead>
         <tr>
-            <th onclick="sortTable(0)">
+            <th >
                PostId
             </th>
             <th onclick="sortTable(1)">

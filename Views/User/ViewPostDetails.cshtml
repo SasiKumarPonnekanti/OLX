@@ -153,7 +153,8 @@ section::after {
                         <div class="col-lg-12 mt-3">
                             <div class="row">
                                 <div class="col-lg-6 pb-2">
-                                    <a href="#" class="btn btn-danger w-100">Chat with Seller</a>
+                                   @* <asp-action="ChatHome" class="btn btn-danger w-100">Chat with Seller</asp>*@
+                                    <button asp-action="ChatHome" class="btn btn-danger w-100">@Html.ActionLink("ChatWithSeller","ChatHome",new{StartHead=@Model.UserId})</button>
                                 </div>
                             </div>
                         </div>

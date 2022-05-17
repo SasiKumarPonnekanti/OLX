@@ -13,6 +13,10 @@ namespace operation_OLX.Controllers
         public IActionResult Index(string Status)
         {
             var Posts= _DataServices.GetPostsAsync().Result;
+            if(Status!=null)
+            {
+                Posts= Posts.Where(p=>p.Status==Status).ToList();
+            }
             return View(Posts);
         }
 

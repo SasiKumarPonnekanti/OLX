@@ -85,7 +85,7 @@ namespace operation_OLX.Controllers
 
         public async Task<IActionResult> ViewMyPosts()
         {
-            var Posts = _DataServices.GetPostsAsync().Result.Where(P => P.UserId == SecurityServices.UserName).ToList();
+            var Posts = _DataServices.GetPostsAsync().Result.Where(P => (P.UserId == SecurityServices.UserName)&&(P.Status=="Active")).ToList();
             return View(Posts);
         }
         public async Task<IActionResult> Repost()
@@ -130,7 +130,25 @@ namespace operation_OLX.Controllers
            Json((await _DataServices.IsfavoritedAsync(id)));
         }
 
-        
+        public IActionResult ChatHome(string StartHead)
+        {
+            var ChatModel = new ChatModel();
+            ViewBag.ChatHead = StartHead;
+            ChatModel.ChatHeads= _DataServices.LoadChatHeadsAsync().Result;
+            return View(ChatModel);
+        }
+        public IActionResult LoadChats(string Id)
+        {
+            ViewBag.ChatHead = Id;
+            var messages = _DataServices.LoadChats(Id).Result;
+            return PartialView("MessageBox",messages);
+        }
+         
+        public async Task<IActionResult> SendMessage(string Id,String Message)
+        {
+            await _DataServices.SendMessageAsync(Id, Message);
+            return Json(true);
+        }
 
     }
 }

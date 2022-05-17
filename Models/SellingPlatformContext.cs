@@ -18,6 +18,7 @@ namespace operation_OLX.Models
 
         public virtual DbSet<Account> Accounts { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<Chat> Chats { get; set; } = null!;
         public virtual DbSet<Favourite> Favourites { get; set; } = null!;
         public virtual DbSet<PersonalInfo> PersonalInfos { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
@@ -54,6 +55,27 @@ namespace operation_OLX.Models
                 entity.ToTable("Category");
 
                 entity.Property(e => e.CatName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Chat>(entity =>
+            {
+                entity.ToTable("Chat");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DateTime)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Message).IsUnicode(false);
+
+                entity.Property(e => e.ReceiverId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SenderId)
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
