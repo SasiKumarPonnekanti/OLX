@@ -2,7 +2,7 @@
 {
     public class ChatModel
     {
-        public List<string> ChatHeads { get; set; }
-        public List<Chat>  Messages { get ; set; }
+        public List<string>? ChatHeads { get; set; }
+        public List<Chat>? Messages { get ; set; }
     }
 }

@@ -9,44 +9,42 @@ namespace operation_OLX.Services
     {
         IWebHostEnvironment hostEnvironment;
         private readonly SellingPlatformContext ctx;
-        string UserId = SecurityServices.UserName;
+        string UserId = SecurityServices.UserName ??"";
         public DataServices(SellingPlatformContext ctx, IWebHostEnvironment hostEnvironment)
         {
             this.ctx = ctx;
             this.hostEnvironment = hostEnvironment;
         }
 
-        public async Task<PersonalInfo> UpdateDetailsAsync(PersonalInfo Details)
+        public async Task<PersonalInfo> UpdateUserDetailsAsync(PersonalInfo UpdatedDetails)
         {
 
-            var MyInfo = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
-            if (MyInfo == null)
+            var UserDetails = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
+            if (UserDetails == null)
             {
-                Details.UserId = UserId;
-                var res2 = await ctx.PersonalInfos.AddAsync(Details);
+                UpdatedDetails.UserId = UserId;
+                var res2 = await ctx.PersonalInfos.AddAsync(UpdatedDetails);
                 await ctx.SaveChangesAsync();
                 return res2.Entity;
             }
             else
             {
-                MyInfo.AboutMe = Details.AboutMe;
-                MyInfo.Email = Details.Email;
-                MyInfo.LandMark = Details.LandMark;
-                MyInfo.City = Details.City;
-                MyInfo.State = Details.State;
-                MyInfo.Name = Details.Name;
-                MyInfo.Phone = Details.Phone;
+                UserDetails.AboutMe = UpdatedDetails.AboutMe;
+                UserDetails.Email = UpdatedDetails.Email;
+                UserDetails.LandMark = UpdatedDetails.LandMark;
+                UserDetails.City = UpdatedDetails.City;
+                UserDetails.State = UpdatedDetails.State;
+                UserDetails.Name = UpdatedDetails.Name;
+                UserDetails.Phone = UpdatedDetails.Phone;
                 await ctx.SaveChangesAsync();
-                return MyInfo;
+                return UserDetails;
             }
         }
 
-        public async Task<PersonalInfo> GetDetailsAsync()
+        public async Task<PersonalInfo> GetUserDetailsAsync()
         {
-
-
-            var MyDetails = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
-            if (MyDetails == null)
+            var UserDetails = await ctx.PersonalInfos.Where(p => p.UserId == UserId).FirstOrDefaultAsync();
+            if (UserDetails == null)
             {
                 PersonalInfo Person = new PersonalInfo();
                 Person.UserId = UserId;
@@ -54,7 +52,7 @@ namespace operation_OLX.Services
             }
             else
             {
-                return MyDetails;
+                return UserDetails;
             }
 
         }
@@ -68,19 +66,19 @@ namespace operation_OLX.Services
         public async Task<bool> AddPostAsync(PostModel Product)
         {
 
-            if (Product.image1 != null)
+            if (Product.image1 != null&&Product.Post!=null)
             {
-                var image1FileName = ContentDispositionHeaderValue.Parse(Product.image1.ContentDisposition).FileName.Trim('"');
+                var image1FileName = (ContentDispositionHeaderValue.Parse(Product.image1.ContentDisposition??"").FileName??"").Trim('"');
                 var FinalPath1 = Path.Combine(hostEnvironment.WebRootPath, "images", image1FileName);
                 using (var fs = new FileStream(FinalPath1, FileMode.Create))
                 {
                     await Product.image1.CopyToAsync(fs);
                 }
-                Product.Post.ImagePath1 = image1FileName;
+                Product.Post.ImagePath1 = image1FileName ;
             }
-            if (Product.image2 != null)
+            if (Product.image2 != null && Product.Post != null)
             {
-                var image2FileName = ContentDispositionHeaderValue.Parse(Product.image2.ContentDisposition).FileName.Trim('"');
+                var image2FileName =(ContentDispositionHeaderValue.Parse(Product.image2.ContentDisposition??"").FileName ??"").Trim('"');
 
                 var FinalPath2 = Path.Combine(hostEnvironment.WebRootPath, "images", image2FileName);
                 using (var fs = new FileStream(FinalPath2, FileMode.Create))
@@ -89,9 +87,9 @@ namespace operation_OLX.Services
                 }
                 Product.Post.ImagePath2 = image2FileName;
             }
-            if (Product.image3 != null)
+            if (Product.image3 != null && Product.Post != null)
             {
-                var image3FileName = ContentDispositionHeaderValue.Parse(Product.image2.ContentDisposition).FileName.Trim('"');
+                var image3FileName = (ContentDispositionHeaderValue.Parse(Product.image3.ContentDisposition??"").FileName??"").Trim('"');
 
                 var FinalPath3 = Path.Combine(hostEnvironment.WebRootPath, "images", image3FileName);
                 using (var fs = new FileStream(FinalPath3, FileMode.Create))
@@ -100,10 +98,14 @@ namespace operation_OLX.Services
                 }
                 Product.Post.ImagePath3 = image3FileName;
             }
-            Product.Post.UserId = UserId;
-            Product.Post.Status = "Pending";
-            Product.Post.Dateposted = DateTime.Now;
-            await ctx.Posts.AddAsync(Product.Post);
+            if (Product.Post != null)
+            {
+                Product.Post.UserId = UserId;
+                Product.Post.Status = "Pending";
+                Product.Post.Dateposted = DateTime.Now;
+                await ctx.Posts.AddAsync(Product.Post);
+            }
+            //await ctx.Posts.AddAsync(Product.Post);
             await ctx.SaveChangesAsync();
             return true;
         }
@@ -133,7 +135,11 @@ namespace operation_OLX.Services
             var Posts = new List<Post>();
             foreach (var f in favourites)
             {
-                Posts.Add(await ctx.Posts.FindAsync(f.PostId));
+                var Post = await ctx.Posts.FindAsync(f.PostId);
+                if (Post != null)
+                {
+                    Posts.Add(Post);
+                }
             }
             return Posts;
         }

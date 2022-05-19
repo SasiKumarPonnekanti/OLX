@@ -5,43 +5,52 @@ namespace operation_OLX.Services
 {
     public class SecurityServices
     {
-        private readonly SellingPlatformContext ctx;
-        public static string UserName;
-        public static string UserRole;
+        protected SellingPlatformContext ctx;
+        public static string? UserName;
+        public static string? UserRole;
         public static bool IsLoogedIn;
         public SecurityServices(SellingPlatformContext ctx)
         {
             this.ctx = ctx;
         }
 
-        public async Task<bool> RegisterUser(RegisterUser newUser)
+        public async Task<bool> RegisterUser(RegisterUser newUserDetails)
         {
             Account account = new Account();
-            account.UserName = newUser.Email;
-            account.Password = EncryptAsync(newUser.Password).Result;
+            account.UserName = newUserDetails.Email;
+            account.Password = EncryptAsync(newUserDetails.Password??"");
             account.UserRole = "User";
-          var entity=  await ctx.AddAsync(account);
+          var UserCreated=  await ctx.AddAsync(account);
             await ctx.SaveChangesAsync();
-            if (entity != null)
+            if (UserCreated != null)
                 return true;
             else
                 return false;   
             
         }
 
-        public async Task<bool> ValidateUserAsync(Account account)
+        public async Task<bool> ValidateUserCredentialsAsync(Account UserCredentials)
         {
-            if(account.UserRole==null)
-            { account.UserRole = "User"; }
-           var res =   ctx.Accounts.Where(e=>e.UserName==account.UserName).FirstOrDefault();
-            if (res != null)
+            if(UserCredentials.UserRole==null)
+            { UserCredentials.UserRole = "User"; }
+
+            var UserWithCurrentCredentials = await ctx.Accounts.Where(e => e.UserName == UserCredentials.UserName).FirstOrDefaultAsync(); ;
+           
+            if (UserWithCurrentCredentials != null)
             {
-                if (DecryptAsync(res.Password).Result == account.Password&&res.UserRole==account.UserRole)
+                if (UserWithCurrentCredentials.Password != null&& UserWithCurrentCredentials.UserName!=null)
                 {
-                    UserName = res.UserName;
-                    IsLoogedIn = true;
-                    UserRole = account.UserRole;
-                    return true;
+                    if (DecryptAsync(UserWithCurrentCredentials.Password) == UserCredentials.Password && UserWithCurrentCredentials.UserRole == UserCredentials.UserRole)
+                    {
+                        UserName = UserWithCurrentCredentials.UserName;
+                        IsLoogedIn = true;
+                        UserRole = UserWithCurrentCredentials.UserRole;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -54,7 +63,7 @@ namespace operation_OLX.Services
             }
         }
 
-        public async Task<string> EncryptAsync(string message)
+        public string EncryptAsync(string message)
         {
             var textToEncrypt = message;
             string toReturn = string.Empty;
@@ -64,8 +73,8 @@ namespace operation_OLX.Services
             secretkeyByte = System.Text.Encoding.UTF8.GetBytes(secretKey);
             byte[] publickeybyte = { };
             publickeybyte = System.Text.Encoding.UTF8.GetBytes(publicKey);
-            MemoryStream ms = null;
-            CryptoStream cs = null;
+            MemoryStream ms;/*= null;*/
+            CryptoStream cs; /*= null;*/
             byte[] inputbyteArray = System.Text.Encoding.UTF8.GetBytes(textToEncrypt);
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
@@ -80,7 +89,7 @@ namespace operation_OLX.Services
         }
 
 
-        public async Task<string> DecryptAsync(string text)
+        public string DecryptAsync(string text)
         {
             var textToDecrypt = text;
             string toReturn = "";
@@ -90,8 +99,8 @@ namespace operation_OLX.Services
             privatekeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);
             byte[] publickeybyte = { };
             publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);
-            MemoryStream ms = null;
-            CryptoStream cs = null;
+            MemoryStream ms /*= null*/;
+            CryptoStream cs;/*= null;*/
             byte[] inputbyteArray = new byte[textToDecrypt.Replace(" ", "+").Length];
             inputbyteArray = Convert.FromBase64String(textToDecrypt.Replace(" ", "+"));
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
@@ -106,10 +115,11 @@ namespace operation_OLX.Services
             return toReturn;
         }
 
-        public async Task<bool> ValidateUserName(string UserName)
+        public async Task<bool> CheckUserNameAvaliability(string UserName)
         {
-            var res = ctx.Accounts.Where(e => e.UserName == UserName).FirstOrDefault();
-            if(res == null)
+            var AccountWithCurrentUserName = await ctx.Accounts.Where(e => e.UserName == UserName).FirstOrDefaultAsync(); ;
+            
+            if(AccountWithCurrentUserName == null)
             {
                 return true;
             }

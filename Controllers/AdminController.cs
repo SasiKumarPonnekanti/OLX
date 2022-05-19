@@ -25,10 +25,10 @@ namespace operation_OLX.Controllers
             return RedirectToAction("Index",new {Status=Status});
         }
 
-        public IActionResult BlockedPosts()
+        public PartialViewResult BlockedPosts()
         {
             var Posts = _DataServices.GetPostsAsync().Result;
-            return View(Posts);
+            return PartialView(Posts);
         }
         public async Task<IActionResult> ApprovePost(int Id)
         {
@@ -36,7 +36,7 @@ namespace operation_OLX.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> BlockPost(int id)
+        public async Task<RedirectToActionResult> BlockPost(int id)
         {
             await _DataServices.UpdatePostStatusAsync(id, "Blocked");
             return RedirectToAction("Index");

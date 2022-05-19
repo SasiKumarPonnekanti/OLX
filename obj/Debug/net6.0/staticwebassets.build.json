@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "x9smrqPjyPAs6Xn3a+Vbuxl4pPMU7uyVfrqcuMwpHIU=",
+  "Hash": "5OluIl0QC7cyoIKgS89t32zXb0N4hQguKWb5uD2i3yU=",
   "Source": "operation_OLX",
   "BasePath": "_content/operation_OLX",
   "Mode": "Default",
@@ -304,6 +304,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\phone.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\Screenshot_20220517_173355.jpg",
+      "SourceId": "operation_OLX",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\",
+      "BasePath": "_content/operation_OLX",
+      "RelativePath": "images/Screenshot_20220517_173355.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Screenshot_20220517_173355.jpg"
     },
     {
       "Identity": "C:\\Users\\Coditas\\Desktop\\Operation_OLX\\operation_OLX\\wwwroot\\images\\taj.jfif",

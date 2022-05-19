@@ -1,4 +1,28 @@
 ﻿
+<!DOCTYPE html>
+ 
+	 
+<html>
+	<head>
+    <meta name="viewport" content="width=device-width" />
+	<script type="text/javascript" 
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+           
+    </script>
+	
+	<script type="text/javascript">
+        $(document).ready(function () {
+			
+		 $('#loadBtn').click(function(){
+			alert('Yes')
+			var msg =$('#input3').text(''); 
+			alert(msg),
+			
+				});
+		});
+   
+    </script>
+</head>
 
 @model List<operation_OLX.Models.Chat>
 <main>
@@ -50,35 +74,12 @@
 	</ul>
 
 <footer>
-	<form >
-	<input id="Message" name="Message"  placeholder="TypeSomething"/>
-	</form>
-	<button onclick="Send('@ViewBag.ChatHead','LetsChat')" class="btn-primary" >Send</button>
+	<input type="text" class="form-control" id="input3" name = "input3"/>
+	<input type="button" id="loadBtn" value="Send" />
 		</footer>
 </main>
+</html>
 
-<script>
-	function Send(name,message){
-		console.log(name),
-		console.log(message),
-		
-		$.ajax(
-               {
-                   type:"POST",
-                   url:"/User/SendMessage",
-                   data:{"Id":name,"Message":message},
-				   success: function (data) {
-                     console.log(data),
-					 myFun(name)
-                    },  
-                     error: function (err) {  
-                     
-                   } 
-               }
-           )
-		
-	}
-</script>				
 
 
 <style>
@@ -311,3 +312,17 @@ main footer btn-primary {
 }
 </style>
 
+ 
+<script>
+<script src="~/lib/jquery/dist~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript" 
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+</scipt>

@@ -22,7 +22,7 @@ namespace operation_OLX.Controllers
        [HttpPost]
         public async Task<IActionResult> Login(Account account)
         {
-            var Isvalid = _SecurityService.ValidateUserAsync(account).Result;
+            var Isvalid =await _SecurityService.ValidateUserCredentialsAsync(account);
             if (Isvalid)
             {
                 return RedirectToAction("Index", $"{SecurityServices.UserRole}");
@@ -34,7 +34,7 @@ namespace operation_OLX.Controllers
             }
         }
       
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             SecurityServices.UserName = String.Empty;
             SecurityServices.IsLoogedIn = false;
@@ -70,7 +70,7 @@ namespace operation_OLX.Controllers
         
         public IActionResult IsValidUserName(string Email)
         {
-            return Json(_SecurityService.ValidateUserName(Email).Result);
+            return Json(_SecurityService.CheckUserNameAvaliability(Email).Result);
         }
     }
 }

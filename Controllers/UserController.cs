@@ -18,7 +18,7 @@ namespace operation_OLX.Controllers
         public async Task<IActionResult> Index(string Name,string Location,string Category)
         {
             var postModel = new PostListModel();
-            ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
+            ViewBag.Categories = new SelectList(await _DataServices.GetCatsAsync(), "CatName", "CatName");
             var FavoritedPosts = _DataServices.LoadfavouriteAsync().Result;
             ViewBag.favs = FavoritedPosts;
             postModel.Posts=  _DataServices.GetPostsAsync(Name,Location,Category).Result.Where(P => P.UserId != SecurityServices.UserName && P.Status == "Active").ToList();
@@ -36,29 +36,29 @@ namespace operation_OLX.Controllers
 
         public async Task<IActionResult> ViewProfile()
         {
-            var Profile = _DataServices.GetDetailsAsync().Result;
+            var Profile =await  _DataServices.GetUserDetailsAsync();
             return View(Profile);
         }
 
 
 
         [HttpPost]
-        public async Task<IActionResult> ViewProfile(PersonalInfo Profile)
+        public async Task<IActionResult> ViewProfile(PersonalInfo UpdatedDetails)
         {
-           await  _DataServices.UpdateDetailsAsync(Profile);
+           await  _DataServices.UpdateUserDetailsAsync(UpdatedDetails);
             return RedirectToAction("ViewProfile");
         }
         public async Task<IActionResult> ViewPosts()
         {
             var Posts =   _DataServices.GetPostsAsync().Result.Where(P=>P.UserId!=SecurityServices.UserName&&P.Status=="Active").ToList();
-            var FPosts = _DataServices.LoadfavouriteAsync().Result;
+            var FPosts = await _DataServices.LoadfavouriteAsync();
             ViewBag.favs= FPosts;
             return View(Posts);
         }
 
         public async Task<IActionResult> AddPost()
         {
-           ViewBag.Categories = new SelectList(_DataServices.GetCatsAsync().Result, "CatName", "CatName");
+           ViewBag.Categories = new SelectList(await _DataServices.GetCatsAsync(), "CatName", "CatName");
             return View(new PostModel());
         }
         [HttpPost]
@@ -78,20 +78,23 @@ namespace operation_OLX.Controllers
 
         public async Task<IActionResult> ViewPostDetails(int id)
         {
-          
-            var Post = _DataServices.GetPostsAsync().Result.Where(p => p.Id== id).FirstOrDefault();
+
+            var Posts = await _DataServices.GetPostsAsync();
+            var Post = Posts.Where(p => p.Id== id).FirstOrDefault();
             return View(Post);
         }
 
         public async Task<IActionResult> ViewMyPosts()
         {
-            var Posts = _DataServices.GetPostsAsync().Result.Where(P => (P.UserId == SecurityServices.UserName)&&(P.Status=="Active")).ToList();
-            return View(Posts);
+            var Posts = await _DataServices.GetPostsAsync();
+            var MyPosts =Posts.Where(P => (P.UserId == SecurityServices.UserName)&&(P.Status=="Active")).ToList();
+            return View(MyPosts);
         }
         public async Task<IActionResult> Repost()
         {
-            var Posts = _DataServices.GetPostsAsync().Result.Where(P => P.UserId == SecurityServices.UserName && P.Status != "Active").ToList();
-            return View(Posts);
+            var DeactivatedPosts = await _DataServices.GetPostsAsync().Where(P => P.UserId == SecurityServices.UserName && P.Status != "Active").ToListAsync();
+            DeactivatedPosts.Where(P => P.UserId == SecurityServices.UserName && P.Status != "Active").ToList();
+            return View(DeactivatedPosts);
 
         }
         public async Task<IActionResult> Activate(int id)
